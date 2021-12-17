@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Лабораторная работа</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="head">					<!-- Кнопка добавления нового студента -->
+
+</div>
+
+<div>                          <!-- Таблица студентов -->
+    <table>
+        <thead>
+        <caption><h1>Таблица студентов</h1></caption>
+        <tr>
+            <td>Id</td>
+            <td>Ф.И.О.</td>
+            <td>Группа</td>
+            <td>Телефон</td>
+            <td>E-mail</td>
+            <td><button type="button" class="add">Добавить</button></td>
+        </tr>
+        </thead>
+        <tbody id="table">
+        </tbody>
+    </table>
+</div>
+
+<div id="remove">        <!-- Форма удаления -->
+    <div class="form-rm">
+        <div>
+            <h4>Вы действительно хотите удалить студента?</h4>
+            <button type="button" class="btn-close" data-id="remove">х</button>
+        </div>
+        <div>
+            <button type="button" class="submit" data-func="remove">Удалить</button> &nbsp;&nbsp;
+            <button type="button" class="close" data-id="remove">Отмена</button>
+        </div>
+    </div>
+</div>
+
+<div id="edit">    <!-- Форма добавления и изменения -->
+    <div class=form-edit>
+        <div>
+            <h4 class="title"></h4>
+            <button type="button" class="btn-close button" data-id="edit">х</button>
+        </div>
+        <form>
+            <input type="hidden" id="Id" value="-1">
+            <div>
+                <label for="name"></label>
+                <input type="tel" id="name" placeholder="Ф.И.О">
+            </div>
+            <div>
+                <label for="group"></label>
+                <select id="group" class="select">
+                    <option value="ЦПИ-11">ЦПИ-11</option>
+                    <option value="ЦПС-12">ЦПС-12</option>
+                    <option value="ЦПС-16">ЦПС-16</option>
+                    <option value="ЦПС-19">ЦПС-19</option>
+                </select>
+            </div>
+            <div>
+                <label for="phone"></label>
+                <input type="tel" id="phone" placeholder="Номер телефона">
+            </div>
+            <div>
+                <label for="email"></label>
+                <input type="tel" id="email" placeholder="E-mail">
+            </div>
+            <div>
+                <button type="button" class="close" data-id="edit">Отмена</button> &nbsp;&nbsp;
+                <button type="button" class="submit" data-func="submit">Сохранить</button>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+<script src="main.js"></script>
+</html>
