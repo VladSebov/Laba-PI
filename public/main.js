@@ -1,32 +1,37 @@
-let data = new function () {
-    let inc = 0;
-    let arr = {};
-    this.init = (callback) => {
+let data = new function () { //Создаём объект data
+    let inc = 0; //Создаём локальную переменную inc - инкремент. С помощью него формируется id
+    let arr = {}; //Создаём объект arr в нем хранятся созданные студенты 
+    this.init = (callback) => { //свойство init задаётся стрелочной функцией необходимо для вывода уже имеющихся данных
         util.ajax({method:"GET"}, data => {
             data.map(std => {
                 arr[std.Id] = std;
                 inc = std.Id;
-            });
+            }); //Метод map вызывает переданную функцию 
+            //callback один раз для каждого элемента,
+            // в порядке их появления и конструирует
+            // новый массив из результатов её вызова.
             inc++;
             if (typeof callback == 'function') callback();
         })
     }
-    this.create = (obj) => {
+    this.create = (obj) => {//свойство create необходимо при создании студента
         obj.Id = inc++;
-        arr[obj.Id] = obj;
+        arr[obj.Id] = obj; 
         util.ajax({method:"POST", body:JSON.stringify(obj)});
+        //создает объект с помощью ajax методом post с заданными параметрами
+        //и посылает данные об объекте в формате JSON
         return obj;
     }
-    this.getAll = () => {
+    this.getAll = () => {//свойство getAll необходимо при получении всего массива студентов
         return Object.values(arr)
     };
-    this.get = (id) => arr[id];
-    this.update = (obj) => {
+    this.get = (id) => arr[id];//свойство get необходимо при получении данных о студенте по id
+    this.update = (obj) => {//свойство update - при обновлении информации о студенте
         arr[obj.Id] = obj;
         util.ajax({method:"PUT", body:JSON.stringify(obj)});
         return obj;
     }
-    this.delete = (id) => {
+    this.delete = (id) => {//свойство delete
         delete arr[id];
         util.ajax({method:"DELETE", path:"/"+id});
     }
@@ -35,11 +40,13 @@ let data = new function () {
 const util = new function () {
     this.ajax = (params, callback) => {
         let url = "";
-        if (params.path !== undefined) { // Для удаления
+        if (params.path !== undefined) { // Для удаления   path - id студента
             url = params.path;
             delete params.path;
         }
-        fetch("/student"+url, params).then(data => data.json().then(callback))
+        fetch("/student"+url, params).then(data => data.json()).then(callback)
+        //fetch ассинхронно отправляет данные на сервер
+        //then выполняется после того как fetch возвращает promise
     }
     this.parse = (tpl, obj) => {
         let str = tpl;
@@ -48,12 +55,12 @@ const util = new function () {
         }
         return str;
     };
-    this.id = (el) => document.getElementById(el);
-    this.q = (el) => document.querySelectorAll(el);
-    this.listen = (el, type, callback) => el.addEventListener(type, callback);
+    this.id = (el) => document.getElementById(el); //свойство id - поиск элемента в HTMl по id
+    this.q = (el) => document.querySelectorAll(el); //возвращает массив элементов с заданным тэгом
+    this.listen = (el, type, callback) => el.addEventListener(type, callback); //свойство listen - при взаимодействии с найденным в HTML элементе
 }
 
-const student = new function () {
+const student = new function () {//Объект student для изменения или удаления мнформация о студенте
     this.submit = () => {   // нажатие кнопки сохранить
         const st = {
             name: util.id("name").value,
@@ -77,7 +84,7 @@ const student = new function () {
         util.id("remove").style.display = "none"
     }
 
-const init = () => {
+const init = () => {//объект init отвечает за рендеринг имеющихся данных и работу кнопок
     data.init(() => {
         this.render();
     });
@@ -149,5 +156,5 @@ const tpl = `
    </tr>
 `;
 
-window.addEventListener("load", init);
+window.addEventListener("load", init);//при загрузке страницы происходит вызов коструктора объекта init
 }

@@ -1,6 +1,6 @@
-FROM node
+FROM node:latest
 
-WORKDIR /app
+WORKDIR /opt/app
 
 COPY package.json /app
 
@@ -8,5 +8,5 @@ RUN npm install
 
 COPY . .
 
-CMD ["node", "index.js"]
+CMD ["npm", "start"]
 
